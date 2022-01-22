@@ -7,16 +7,16 @@ use Illuminate\View\Component;
 class TestClassBase extends Component
 {
     public $classBaseMessage;
-    public $defultMessage;
+    public $defaultMessage;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($classBaseMessage ,$defultMessage='初期値です。')
+    public function __construct($classBaseMessage, $defaultMessage="初期値です。")
     {
-       $this->classBaseMessgae = $classBaseMessage;
-       $this->defultMessage = $defultMessage;
+        $this->classBaseMessage = $classBaseMessage;
+        $this->defaultMessage = $defaultMessage;
     }
 
     /**

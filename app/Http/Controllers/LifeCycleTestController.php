@@ -6,30 +6,32 @@ use Illuminate\Http\Request;
 
 class LifeCycleTestController extends Controller
 {
-
+    //
     public function showServiceProviderTest()
     {
         $encrypt = app()->make('encrypter');
         $password = $encrypt->encrypt('password');
 
-        $sample=app()->make('serviceProviderTest');
-    
-        dd($sample,$password, $encrypt->decrypt($password));
+        $sample = app()->make('serviceProviderTest');
+
+        dd($sample, $password, $encrypt->decrypt($password));
+
     }
+
     public function showServiceContainerTest()
     {
-        app()->bind('lifeCycleTest', function () {
+        app()->bind('lifeCycleTest', function(){
             return 'ライフサイクルテスト';
         });
+
         $test = app()->make('lifeCycleTest');
 
-        //    //サービスコンテナなしの場合 
-        //    $message=new Message();
-        //    $sample=new Sample($message);
-        //    $sample->run();
-        //     dd($test,app());
+        //サービスコンテナなしのパターン
+        // $message = new Message();
+        // $sample = new Sample($message);
+        // $sample->run();
 
-        //サービスコンテナありの場合　インスタンス化しなくていい
+        //サービスコンテナapp()ありのパターン
         app()->bind('sample', Sample::class);
         $sample = app()->make('sample');
         $sample->run();
@@ -41,21 +43,17 @@ class LifeCycleTestController extends Controller
 class Sample
 {
     public $message;
-    public function __construct(Message $message)
-    { //クラスを渡す
+    public function __construct(Message $message){
         $this->message = $message;
-        //dd($message);
-
     }
-    public function run()
-    { //上記で渡すことでsendメソッドが使える
+    public function run(){
         $this->message->send();
     }
 }
+
 class Message
 {
-    public function send()
-    {
-        echo ('メッセージ');
+    public function send(){
+        echo('メッセージ表示');
     }
 }
